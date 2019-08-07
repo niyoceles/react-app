@@ -3,11 +3,10 @@ import {connect} from 'react-redux';
 import PropTypes from 'prop-types';
 import { fetchTask } from "../actions/index";
 
-class Posts extends Component {
+export class Posts extends Component {
   
   componentWillMount() {
    this.props.fetchTask();
-   console.log(this.props.remoteUsers);
   }
 
   componentWillReceiveProps(nextProps){
