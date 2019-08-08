@@ -1,4 +1,4 @@
-import { ADD_USER, DATA_LOADED, LOGIN_DATA } from '../constants/action-types';
+import { SIGN_UP, DATA_LOADED, LOGIN_DATA } from '../constants/action-types';
 
 const initialState = {
   items: [],
@@ -13,7 +13,7 @@ export default function (state = initialState, action) {
         ...state,
         items: action.payload,
       };
-    case ADD_USER:
+    case SIGN_UP:
       return {
         ...state,
         item: action.payload,

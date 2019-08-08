@@ -1,16 +1,16 @@
-// src/js/components/Form.jsx
+/* eslint-disable react/destructuring-assignment */
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import uuidv1 from 'uuid';
-import { createUser } from '../actions/index';
+import { signUp } from '../actions/index';
 
 function mapDispatchToProps(dispatch) {
   return {
-    createUser: user => dispatch(createUser(user)),
+    signUp: user => dispatch(signUp(user)),
   };
 }
 
-class userForm extends Component {
+export class SignUp extends Component {
   constructor() {
     super();
     this.state = {
@@ -33,33 +33,49 @@ class userForm extends Component {
 
   handleSubmit(e) {
     e.preventDefault();
+    const {
+      firstName, lastName, email, phone, userName, password, location,
+    } = this.state;
 
-    const createUserData = {
+    const signUpData = {
       id: uuidv1(),
-      firstName: this.state.firstName,
-      lastName: this.state.lastName,
-      email: this.state.email,
-      phone: this.state.phone,
-      userName: this.state.userName,
-      password: this.state.password,
-      location: this.state.location,
+      firstName,
+      lastName,
+      email,
+      phone,
+      userName,
+      password,
+      location,
     };
     // call action
-    this.props.createUser(createUserData);
+    // eslint-disable-next-line react/prop-types
+    this.props.signUp(signUpData);
   }
 
   render() {
-    const { firstName } = this.state;
-    const { lastName } = this.state;
-    const { email } = this.state;
-    const { phone } = this.state;
-    const { userName } = this.state;
-    const { password } = this.state;
-    const { location } = this.state;
+    const {
+      firstName, lastName, email, phone, userName, password, location,
+    } = this.state;
 
-    // const { item } = this.props.newUser;
+    const styleSignup = {
+      border: '4px solid pink',
+      width: '50%',
+      margin: '0 auto',
+    };
+
+    const userSignup = this.props.newUser.item;
+    localStorage.setItem('token', userSignup.token);
+    localStorage.setItem('userDetails', JSON.stringify(userSignup.data));
+    if (userSignup.status === 201) {
+      alert('Successful signup');
+      window.location = './users';
+    }
+    console.log(userSignup);
+
     return (
-      <div>
+      <div style={styleSignup}>
+        <h3>Sign form</h3>
+        <hr />
         <form onSubmit={this.handleSubmit}>
           <div className="form-group">
             <label>First Name</label>
@@ -136,7 +152,7 @@ class userForm extends Component {
           </div>
 
           <button type="submit" className="btn btn-success btn-lg">
-          Create User
+          Signup
           </button>
         </form>
       </div>
@@ -149,5 +165,5 @@ function mapStateToProps(state) {
     newUser: state.newUser,
   };
 }
-const CreateUser = connect(mapStateToProps, mapDispatchToProps)(userForm);
-export default CreateUser;
+const creatingUser = connect(mapStateToProps, mapDispatchToProps)(SignUp);
+export default creatingUser;

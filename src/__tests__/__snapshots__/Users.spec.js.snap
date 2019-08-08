@@ -2,6 +2,15 @@
 
 exports[`testing Users component should render Users component 1`] = `
 <div>
-  Users
+  <h2
+    style={
+      Object {
+        "margin": "2px",
+        "textAlign": "center",
+      }
+    }
+  >
+     Banka Application Users
+  </h2>
 </div>
 `;

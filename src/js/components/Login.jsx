@@ -8,7 +8,7 @@ function mapDispatchToProps(dispatch) {
   };
 }
 
-class LoginForm extends Component {
+export class Login extends Component {
   constructor() {
     super();
     this.state = {
@@ -39,11 +39,28 @@ class LoginForm extends Component {
     const userLogin = this.props.newLogin.login;
     localStorage.setItem('token', userLogin.token);
     localStorage.setItem('userDetails', JSON.stringify(userLogin.data));
+    if (userLogin.status === 200) {
+      alert('Successful login');
+      window.location = './users';
+    }
+    // if (userLogin.status === 400) {
+    //   alert(userLogin.error);
+    // }
+
+
+    const styleLogin = {
+      border: '4px solid pink',
+      width: '50%',
+      margin: '0 auto',
+    };
+
     return (
-      <div>
+      <div style={styleLogin}>
+        <h3>Login form</h3>
+        <hr />
         <form onSubmit={this.handleSubmit}>
           <div className="form-group">
-            <label htmlFor="email">email</label>
+            <label>Email</label>
             <input
               type="text"
               name="email"
@@ -79,5 +96,5 @@ function mapStateToProps(state) {
     newLogin: state.newLogin,
   };
 }
-const Form = connect(mapStateToProps, mapDispatchToProps)(LoginForm);
+const Form = connect(mapStateToProps, mapDispatchToProps)(Login);
 export default Form;
