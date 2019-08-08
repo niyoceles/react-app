@@ -1,0 +1,114 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`testing Create user component should render create user component 1`] = `
+<div>
+  <form
+    onSubmit={[Function]}
+  >
+    <div
+      className="form-group"
+    >
+      <label>
+        First Name
+      </label>
+      <input
+        className="form-control"
+        id="firstName"
+        onChange={[Function]}
+        type="text"
+        value=""
+      />
+    </div>
+    <div
+      className="form-group"
+    >
+      <label>
+        Last Name
+      </label>
+      <input
+        className="form-control"
+        id="lastName"
+        onChange={[Function]}
+        type="text"
+        value=""
+      />
+    </div>
+    <div
+      className="form-group"
+    >
+      <label>
+        Email
+      </label>
+      <input
+        className="form-control"
+        id="email"
+        onChange={[Function]}
+        type="text"
+        value=""
+      />
+    </div>
+    <div
+      className="form-group"
+    >
+      <label>
+        Phone
+      </label>
+      <input
+        className="form-control"
+        id="phone"
+        onChange={[Function]}
+        type="text"
+        value=""
+      />
+    </div>
+    <div
+      className="form-group"
+    >
+      <label>
+        Username
+      </label>
+      <input
+        className="form-control"
+        id="userName"
+        onChange={[Function]}
+        type="text"
+        value=""
+      />
+    </div>
+    <div
+      className="form-group"
+    >
+      <label>
+        Password
+      </label>
+      <input
+        className="form-control"
+        id="password"
+        onChange={[Function]}
+        type="password"
+        value=""
+      />
+    </div>
+    <div
+      className="form-group"
+    >
+      <label>
+        Location
+      </label>
+      <input
+        className="form-control"
+        id="location"
+        onChange={[Function]}
+        type="text"
+        value=""
+      />
+    </div>
+    <button
+      className="btn btn-success btn-lg"
+      type="submit"
+    >
+      Create User
+    </button>
+  </form>
+</div>
+`;

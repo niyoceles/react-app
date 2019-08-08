@@ -18,7 +18,7 @@ export class Users extends Component {
 
     const titleHeader = {
       margin: '2px',
-      'text-align': 'center',
+      textAlign: 'center',
     };
     const allUsers = this.props.remoteUsers.map(users => (
       <div key={users.id}>
