@@ -1,34 +1,99 @@
-import React, { Component } from "react";
-import { connect } from "react-redux";
-import { getUsers } from "../actions/index";
+import React, { Component } from 'react';
+import { connect } from 'react-redux';
+import PropTypes from 'prop-types';
+import { fetchUser } from '../actions/index';
 
-export class User extends Component {
-  constructor() {
-    super();
-  }
-  componentWillMount(){
-    this.props.getUsers();
+export class Users extends Component {
+  componentWillMount() {
+    this.props.fetchUser();
   }
 
   render() {
+    const card = {
+      margin: '2px',
+      border: '5px solid pink',
+      width: '30%',
+      float: 'left',
+    };
+
+    const titleHeader = {
+      margin: '2px',
+      'text-align': 'center',
+    };
+    const allUsers = this.props.remoteUsers.map(users => (
+      <div key={users.id}>
+        <div className="card" style={card}>
+          <div className="card-body text-center mt-4">
+            <h4 className="card-title">
+              {' '}
+              {users.firstName}
+              {' '}
+              {users.firstName}
+            </h4>
+            <p className="card-text">
+Phone:
+              {' '}
+              {users.phone}
+              {' '}
+            </p>
+            <p className="card-text">
+Email:
+              {' '}
+              {users.email}
+              {' '}
+            </p>
+            <p className="card-text">
+Username:
+              {' '}
+              {users.userName}
+              {' '}
+            </p>
+            <p className="card-text">
+Area/ Location:
+              {' '}
+              {users.location}
+              {' '}
+            </p>
+            <ul className="list-inline">
+              <li className="list-inline-item">
+                <a className="social-icon text-xs-center" target="_blank" href="#">
+                  <i className="fa fa-facebook" />
+                </a>
+              </li>
+              <li className="list-inline-item">
+                <a className="social-icon text-xs-center" target="_blank" href="#">
+                  <i className="fa fa-twitter" />
+                </a>
+              </li>
+              <li className="list-inline-item">
+                <a className="social-icon text-xs-center" target="_blank" href="#">
+                  <i className="fa fa-skype" />
+                </a>
+              </li>
+              <li className="list-inline-item">
+                <a className="social-icon text-xs-center" target="_blank" href="#">
+                  <i className="fa fa-google" />
+                </a>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    ));
     return (
-      <ul className="list-group list-group-flush">
-        <h2>Users</h2>
-        {this.props.remoteUsers.map(user => {
-          return (<li className="list-group-item" key={user.id}>
-            {user.title}
-          </li>);
-        })}
-      </ul>
+
+      <div>
+        <h2 style={titleHeader}> Banka Application Users</h2>
+        {allUsers}
+      </div>
     );
   }
 }
-function mapStateToProps(state) {
-  return {
-    remoteUsers: state.remoteUsers
-  };
-}
-export default connect(
-  mapStateToProps,
-  { getUsers }
-)(User);
+
+Users.propTypes = {
+  fetchUser: PropTypes.func.isRequired,
+};
+const mapStateToProps = state => ({
+  remoteUsers: state.remoteUsers.items,
+});
+export default connect(mapStateToProps, { fetchUser })(Users);

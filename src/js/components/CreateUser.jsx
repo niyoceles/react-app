@@ -1,23 +1,26 @@
 // src/js/components/Form.jsx
-import React, { Component } from "react";
-import { connect } from "react-redux";
-import uuidv1 from "uuid";
-import { addUser } from "../actions/index";
+import React, { Component } from 'react';
+import { connect } from 'react-redux';
+import uuidv1 from 'uuid';
+import { createUser } from '../actions/index';
 
 function mapDispatchToProps(dispatch) {
   return {
-    addUser: user => dispatch(addUser(user))
+    createUser: user => dispatch(createUser(user)),
   };
 }
 
-class userForm extends Component {
+export class CreateUser extends Component {
   constructor() {
     super();
     this.state = {
-      firstname: '',
-      lastname: '',
+      firstName: '',
+      lastName: '',
       email: '',
+      phone: '',
+      userName: '',
       password: '',
+      location: '',
     };
 
     this.handleChange = this.handleChange.bind(this);
@@ -31,68 +34,120 @@ class userForm extends Component {
   handleSubmit(e) {
     e.preventDefault();
 
-    const postUser = {
+    const createUserData = {
       id: uuidv1(),
-      firstname: this.state.firstname,
-      lastname:this.state.lastname,
+      firstName: this.state.firstName,
+      lastName: this.state.lastName,
       email: this.state.email,
-      password:this.state.password 
-    }
-// call action
-    this.props.addUser(postUser);
+      phone: this.state.phone,
+      userName: this.state.userName,
+      password: this.state.password,
+      location: this.state.location,
+    };
+    // call action
+    this.props.createUser(createUserData);
   }
-  
+
   render() {
-    const { firstname } = this.state;
-    const { lastname } = this.state;
+    const { firstName } = this.state;
+    const { lastName } = this.state;
     const { email } = this.state;
+    const { phone } = this.state;
+    const { userName } = this.state;
     const { password } = this.state;
+    const { location } = this.state;
 
-    const { item } = this.props.newUser;
-
+    // const { item } = this.props.newUser;
     return (
       <div>
-      <form onSubmit={this.handleSubmit}>
-        <div className="form-group">
-          <label>First Name</label>
-          <input type="text" className="form-control" id="firstname" value={firstname}
-            onChange={this.handleChange}
-          />
-        </div>
-        <div className="form-group">
-          <label>Last Name</label>
-          <input type="text" className="form-control" id="lastname" value={lastname}
-            onChange={this.handleChange}
-          />
-        </div>
-        <div className="form-group">
-          <label>Email</label>
-          <input type="text" className="form-control" id="email" value={email}
-            onChange={this.handleChange}
-          />
-        </div>
+        <form onSubmit={this.handleSubmit}>
+          <div className="form-group">
+            <label>First Name</label>
+            <input
+              type="text"
+              className="form-control"
+              id="firstName"
+              value={firstName}
+              onChange={this.handleChange}
+            />
+          </div>
+          <div className="form-group">
+            <label>Last Name</label>
+            <input
+              type="text"
+              className="form-control"
+              id="lastName"
+              value={lastName}
+              onChange={this.handleChange}
+            />
+          </div>
+          <div className="form-group">
+            <label>Email</label>
+            <input
+              type="text"
+              className="form-control"
+              id="email"
+              value={email}
+              onChange={this.handleChange}
+            />
+          </div>
 
-        <div className="form-group">
-          <label>Password</label>
-          <input type="password" className="form-control" id="password" value={password}
-            onChange={this.handleChange}
-          />
-        </div>
-        <button type="submit" className="btn btn-success btn-lg">
+          <div className="form-group">
+            <label>Phone</label>
+            <input
+              type="text"
+              className="form-control"
+              id="phone"
+              value={phone}
+              onChange={this.handleChange}
+            />
+          </div>
+
+          <div className="form-group">
+            <label>Username</label>
+            <input
+              type="text"
+              className="form-control"
+              id="userName"
+              value={userName}
+              onChange={this.handleChange}
+            />
+          </div>
+
+          <div className="form-group">
+            <label>Password</label>
+            <input
+              type="password"
+              className="form-control"
+              id="password"
+              value={password}
+              onChange={this.handleChange}
+            />
+          </div>
+          <div className="form-group">
+            <label>Location</label>
+            <input
+              type="text"
+              className="form-control"
+              id="location"
+              value={location}
+              onChange={this.handleChange}
+            />
+          </div>
+
+          <button type="submit" className="btn btn-success btn-lg">
           Create User
-        </button>
-      </form>
-      {item.firstname}
-      </div> 
+          </button>
+        </form>
+      </div>
     );
   }
 }
 
 function mapStateToProps(state) {
-  console.log('state', state);
   return {
-    newUser: state.newUser
+    newUser: state.newUser,
   };
 }
-const CreateUser = connect(mapStateToProps, mapDispatchToProps)(userForm);
-export default CreateUser;
+const creatingUser = connect(mapStateToProps, mapDispatchToProps)(CreateUser);
+export default creatingUser;
