@@ -8,7 +8,7 @@ function mapDispatchToProps(dispatch) {
   };
 }
 
-class LoginForm extends Component {
+export class Login extends Component {
   constructor() {
     super();
     this.state = {
@@ -79,5 +79,5 @@ function mapStateToProps(state) {
     newLogin: state.newLogin,
   };
 }
-const Form = connect(mapStateToProps, mapDispatchToProps)(LoginForm);
+const Form = connect(mapStateToProps, mapDispatchToProps)(Login);
 export default Form;

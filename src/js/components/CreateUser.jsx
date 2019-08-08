@@ -10,7 +10,7 @@ function mapDispatchToProps(dispatch) {
   };
 }
 
-class userForm extends Component {
+export class CreateUser extends Component {
   constructor() {
     super();
     this.state = {
@@ -149,5 +149,5 @@ function mapStateToProps(state) {
     newUser: state.newUser,
   };
 }
-const CreateUser = connect(mapStateToProps, mapDispatchToProps)(userForm);
-export default CreateUser;
+const creatingUser = connect(mapStateToProps, mapDispatchToProps)(CreateUser);
+export default creatingUser;
