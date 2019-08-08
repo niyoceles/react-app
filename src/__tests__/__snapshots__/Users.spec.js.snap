@@ -1,11 +1,7 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`testing User component should render User component 1`] = `
-<ul
-  className="list-group list-group-flush"
->
-  <h2>
-    Users
-  </h2>
-</ul>
+exports[`testing Users component should render Users component 1`] = `
+<div>
+  Users
+</div>
 `;

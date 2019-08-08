@@ -1,61 +1,33 @@
-import { ADD_USER, LOGIN_DATA, DATA_LOADED } from "../constants/action-types";
+import {
+  ADD_USER, LOGIN_DATA, DATA_LOADED, CREATE_USER,
+} from '../constants/action-types';
 
-export const addUser = (payload) => {
-  return { type: ADD_USER, payload };
-}
+export const addUser = payload => ({ type: ADD_USER, payload });
 
-export const fetchTask = () => dispatch =>{
-  fetch('https://jsonplaceholder.typicode.com/posts')
-  .then(res => res.json())
-  .then(posts => 
-      dispatch({
-          type:DATA_LOADED,
-          payload: posts
-      })
-      );
-};
-
-export const createPost = (post)=> dispatch =>{
-  fetch('https://jsonplaceholder.typicode.com/posts', {
-      method: 'POST',
-      headers: {
-        Accept: 'application/json, text/plain, */*',
-        // 'access-token': token,
-        'Content-type': 'application/json',
-      },
-      body: JSON.stringify(post),
-    })
-    .then(res => res.json())
-    .then((post) => dispatch({
-      type: "NEW_TASK",
-      payload: post
-  }));
-};
-
-export function getUsers() {
-  // let token = '';
-  return function(dispatch) {
-    return fetch('https://jsonplaceholder.typicode.com/posts', {
+export function fetchUser() {
+  // eslint-disable-next-line func-names
+  return function (dispatch) {
+    return fetch('https://banka-apps.herokuapp.com/api/v1/auth/users', {
       method: 'GET',
       headers: {
         Accept: 'application/json, text/plain, */*',
-        'access-token': localStorage.getItem('token'),
+        // 'access-token': localStorage.getItem('token'),
         'Content-type': 'application/json',
       },
     })
       .then(response => response.json())
-      .then(user => {
-        dispatch({ 
-          type: DATA_LOADED, 
-          payload: user 
-        });
-      });
+      .then((users) => {
+        // console.log('now what', users.data);
+        dispatch({ type: DATA_LOADED, payload: users.data });
+      }).catch(error => console.log('error', error));
   };
 }
 
+
 export function loginData(postLoginData) {
-  let token = '';
-  return function(dispatch) {
+  const token = '';
+  // eslint-disable-next-line func-names
+  return function (dispatch) {
     return fetch('https://banka-apps.herokuapp.com/api/v1/auth/signin', {
       method: 'POST',
       headers: {
@@ -66,8 +38,29 @@ export function loginData(postLoginData) {
       body: JSON.stringify(postLoginData),
     })
       .then(response => response.json())
-      .then(json => {
+      .then((json) => {
         dispatch({ type: LOGIN_DATA, payload: json });
-      });
+      }).catch(error => console.log('error', error));
+  };
+}
+
+export function createUser(createUserData) {
+  // const token = localStorage.getItem('token');
+  // eslint-disable-next-line func-names
+  return function (dispatch) {
+    return fetch('https://banka-apps.herokuapp.com/api/v1/auth/signup', {
+      method: 'POST',
+      headers: {
+        Accept: 'application/json, text/plain, */*',
+        // 'access-token': token,
+        'Content-type': 'application/json',
+      },
+      body: JSON.stringify(createUserData),
+    })
+      .then(response => response.json())
+      .then((userInfo) => {
+        console.log('now what', userInfo.data);
+        dispatch({ type: CREATE_USER, payload: userInfo });
+      }).catch(error => console.log('error', error));
   };
 }
