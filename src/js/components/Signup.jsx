@@ -70,7 +70,6 @@ export class SignUp extends Component {
       alert('Successful signup');
       window.location = './users';
     }
-    console.log(userSignup);
 
     return (
       <div style={styleSignup}>

@@ -23,14 +23,14 @@ export function fetchUser() {
 
 
 export function loginData(postLoginData) {
-  const token = '';
+  // const token = '';
   // eslint-disable-next-line func-names
   return function (dispatch) {
     return fetch('https://banka-apps.herokuapp.com/api/v1/auth/signin', {
       method: 'POST',
       headers: {
         Accept: 'application/json, text/plain, */*',
-        'access-token': token,
+        // 'access-token': token,
         'Content-type': 'application/json',
       },
       body: JSON.stringify(postLoginData),

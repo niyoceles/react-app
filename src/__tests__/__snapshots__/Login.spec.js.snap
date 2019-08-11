@@ -5,8 +5,7 @@ exports[`testing Login component should render Login component 1`] = `
   style={
     Object {
       "border": "4px solid pink",
-      "margin": "2px",
-      "textAlign": "center",
+      "margin": "0 auto",
       "width": "50%",
     }
   }
@@ -14,16 +13,15 @@ exports[`testing Login component should render Login component 1`] = `
   <h3>
     Login form
   </h3>
+  <hr />
   <form
     onSubmit={[Function]}
   >
     <div
       className="form-group"
     >
-      <label
-        htmlFor="email"
-      >
-        email
+      <label>
+        Email
       </label>
       <input
         className="form-control"
