@@ -2,11 +2,16 @@
   "name": "react-app",
   "version": "1.0.0",
   "description": "",
+  "engines": {
+    "node": "10.16.0",
+    "npm": "6.10.2"
+  },
   "main": "index.js",
   "scripts": {
+    "start:heroku": "node server.js",
     "test": "jest -u",
     "build": "webpack --mode production",
-    "start": "webpack-dev-server --open --mode development",
+    "start": "webpack-dev-server --open --hot --inline --mode development",
     "lint": "eslint --ext .jsx,.js src"
   },
   "jest": {
@@ -45,7 +50,6 @@
     "eslint-plugin-jsx-a11y": "^6.2.3",
     "eslint-plugin-react": "^7.14.3",
     "eslint-plugin-standard": "^4.0.0",
-    "html-loader": "^0.5.5",
     "html-webpack-plugin": "^3.2.0",
     "webpack": "^4.39.1",
     "webpack-cli": "^3.3.6",
@@ -55,6 +59,9 @@
     "babel-eslint": "^10.0.2",
     "enzyme": "^3.10.0",
     "enzyme-adapter-react-16": "^1.14.0",
+    "express": "^4.17.1",
+    "gh-pages": "^2.1.1",
+    "html-loader": "^0.5.5",
     "jest": "^24.8.0",
     "prop-types": "^15.7.2",
     "react": "^16.8.6",
