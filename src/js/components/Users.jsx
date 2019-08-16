@@ -13,12 +13,12 @@ export class Users extends Component {
       margin: '2px',
       border: '5px solid pink',
       width: '30%',
-      float: 'left',
+      float: 'left'
     };
 
     const titleHeader = {
       margin: '2px',
-      textAlign: 'center',
+      textAlign: 'center'
     };
     const allUsers = this.props.remoteUsers.map(users => (
       <div key={users.id}>
@@ -91,9 +91,9 @@ Area/ Location:
 }
 
 Users.propTypes = {
-  fetchUser: PropTypes.func.isRequired,
+  fetchUser: PropTypes.func.isRequired
 };
 const mapStateToProps = state => ({
-  remoteUsers: state.remoteUsers.items,
+  remoteUsers: state.remoteUsers.items
 });
 export default connect(mapStateToProps, { fetchUser })(Users);
