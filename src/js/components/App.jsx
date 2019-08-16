@@ -1,25 +1,26 @@
 import React, { Component } from 'react';
 import {
-  BrowserRouter as Router, Route, Switch, Link,
+  BrowserRouter as Router, Route, Switch, Link
 } from 'react-router-dom';
 
-import Login from './Login.jsx';
-import Signup from './Signup.jsx';
+import Auth from './Auth.jsx';
 import Users from './Users.jsx';
+import '../../css/style.css';
+import '../../assets/js/app';
 
 class App extends Component {
   render() {
-    const ulStyle = {
-      width: '350px',
-      height: '50px',
-    };
-    const linkStyle = {
-      color: 'white',
-    };
+    // const ulStyle = {
+    //   width: '350px',
+    //   height: '50px',
+    // };
+    // const linkStyle = {
+    //   color: 'white',
+    // };
     return (
-      <Router>
-        <div>
-          <ul className="nav nav-pills">
+      <div>
+        <Router>
+          {/* <ul className="nav nav-pills">
             <button style={ulStyle} className="btn-primary">
               <Link to="/signup" style={linkStyle}>User Sign Up</Link>
             </button>
@@ -30,14 +31,14 @@ class App extends Component {
               <Link to="/users" style={linkStyle}>Users</Link>
             </button>
           </ul>
-          <hr />
+          <hr /> */}
           <Switch>
-            <Route exact path="/" component={Login} />
-            <Route exact path="/signup" component={Signup} />
+            <Route exact path="/" component={Auth} />
             <Route path="/users" component={Users} />
           </Switch>
-        </div>
-      </Router>
+        </Router>
+      </div>
+
     );
   }
 }

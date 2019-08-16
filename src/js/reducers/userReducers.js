@@ -3,7 +3,7 @@ import { SIGN_UP, DATA_LOADED, LOGIN_DATA } from '../constants/action-types';
 const initialState = {
   items: [],
   item: [],
-  login: [],
+  login: []
 };
 
 export default function (state = initialState, action) {
@@ -11,19 +11,19 @@ export default function (state = initialState, action) {
     case DATA_LOADED:
       return {
         ...state,
-        items: action.payload,
+        items: action.payload
       };
     case SIGN_UP:
       return {
         ...state,
-        item: action.payload,
+        item: action.payload
         // item: state.items.concat(action.payload)
       };
 
     case LOGIN_DATA:
       return {
         ...state,
-        login: action.payload,
+        login: action.payload
         // item: state.items.concat(action.payload)
       };
     default:

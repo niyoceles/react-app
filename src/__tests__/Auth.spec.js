@@ -1,12 +1,12 @@
 import React from 'react';
 import { shallow } from 'enzyme';
-import { Login } from '../js/components/Login';
+import { Auth } from '../js/components/Auth';
 
 
 describe('testing Login component', () => {
   test('should render Login component', () => {
-    const props = { loginData: jest.fn(), newLogin: { login: { token: '' } } };
-    const wrapper = shallow(<Login {...props} />);
+    const props = { loginData: jest.fn(), aaa: { login: { token: '' } }, newUser: { item: '' } };
+    const wrapper = shallow(<Auth {...props} />);
     expect(wrapper).toMatchSnapshot();
   });
 });
