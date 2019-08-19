@@ -67,7 +67,7 @@ export class Auth extends Component {
       email: this.state.email,
       password: this.state.password
     };
-    this.props.loginData(postLoginData);
+    this.props.loginData = (postLoginData);
     console.log(this);
   }
 
