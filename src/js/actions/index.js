@@ -1,16 +1,15 @@
 import 'babel-polyfill';
 import axios from 'axios';
-// import postLoginData from '../components/Auth';
 import {
-  LOGIN_DATA, DATA_LOADED, SIGN_UP
+  LOGIN_SUCCESS, LOGIN_FAILURE, DATA_LOADED_FAILURE, DATA_LOADED_SUCCESS, SIGN_UP
 } from '../constants/action-types';
 
 export const fetchUser = () => async (dispatch) => {
   try {
     const users = await axios.get('https://banka-apps.herokuapp.com/api/v1/auth/users');
-    dispatch({ type: DATA_LOADED, payload: users.data.data });
+    dispatch({ type: DATA_LOADED_SUCCESS, payload: users.data.data });
   } catch (error) {
-    console.log('error', error);
+    dispatch({ type: DATA_LOADED_FAILURE, payload: error.response.data.error });
   }
 };
 
@@ -20,15 +19,13 @@ export const loginData = postLoginData => async (dispatch) => {
     const signin = await axios.post('https://banka-apps.herokuapp.com/api/v1/auth/signin', {
       postLoginData
     });
-    console.log(postLoginData);
-    dispatch({ type: LOGIN_DATA, payload: signin });
+    dispatch({ type: LOGIN_SUCCESS, payload: signin.data.message });
   } catch (error) {
-    console.log('error', error);
+    dispatch({ type: LOGIN_FAILURE, payload: error.response.data.error });
   }
 };
 
 export function signUp(signUpData) {
-  // const token = localStorage.getItem('token');
   // eslint-disable-next-line func-names
   return function (dispatch) {
     return fetch('https://banka-apps.herokuapp.com/api/v1/auth/signup', {

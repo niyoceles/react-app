@@ -39,11 +39,6 @@ exports[`testing Login component should render Login component 1`] = `
     <div
       className="navbar-links"
     >
-      <a
-        href="./users"
-      >
-        User
-      </a>
        
       <button
         id="sign-up"

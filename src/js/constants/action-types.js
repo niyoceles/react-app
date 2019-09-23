@@ -1,4 +1,7 @@
 export const ADD_USER = 'ADD_USER';
-export const LOGIN_DATA = 'LOGIN_DATA';
-export const DATA_LOADED = 'DATA_LOADED';
-export const SIGN_UP = 'SIGN_UP';
+export const LOGIN_SUCCESS = 'LOGIN_SUCCESS';
+export const LOGIN_FAILURE = 'LOGIN_FAILURE';
+export const DATA_LOADED_SUCCESS = 'DATA_LOADED_SUCCESS';
+export const DATA_LOADED_FAILURE = 'DATA_LOADED_FAILURE';
+export const SIGN_UP_SUCCESS = 'SIGN_UP_SUCCESS';
+export const SIGN_UP_FAILURE = 'SIGN_UP_FAILURE';
