@@ -1,46 +1,31 @@
+import 'babel-polyfill';
+import axios from 'axios';
+// import postLoginData from '../components/Auth';
 import {
-  LOGIN_DATA, DATA_LOADED, SIGN_UP,
+  LOGIN_DATA, DATA_LOADED, SIGN_UP
 } from '../constants/action-types';
 
-export function fetchUser() {
-  // eslint-disable-next-line func-names
-  return function (dispatch) {
-    return fetch('https://banka-apps.herokuapp.com/api/v1/auth/users', {
-      method: 'GET',
-      headers: {
-        Accept: 'application/json, text/plain, */*',
-        // 'access-token': localStorage.getItem('token'),
-        'Content-type': 'application/json',
-      },
-    })
-      .then(response => response.json())
-      .then((users) => {
-        // console.log('now what', users.data);
-        dispatch({ type: DATA_LOADED, payload: users.data });
-      }).catch(error => console.log('error', error));
-  };
-}
+export const fetchUser = () => async (dispatch) => {
+  try {
+    const users = await axios.get('https://banka-apps.herokuapp.com/api/v1/auth/users');
+    dispatch({ type: DATA_LOADED, payload: users.data.data });
+  } catch (error) {
+    console.log('error', error);
+  }
+};
 
 
-export function loginData(postLoginData) {
-  // const token = '';
-  // eslint-disable-next-line func-names
-  return function (dispatch) {
-    return fetch('https://banka-apps.herokuapp.com/api/v1/auth/signin', {
-      method: 'POST',
-      headers: {
-        Accept: 'application/json, text/plain, */*',
-        // 'access-token': token,
-        'Content-type': 'application/json',
-      },
-      body: JSON.stringify(postLoginData),
-    })
-      .then(response => response.json())
-      .then((json) => {
-        dispatch({ type: LOGIN_DATA, payload: json });
-      }).catch(error => console.log('error', error));
-  };
-}
+export const loginData = postLoginData => async (dispatch) => {
+  try {
+    const signin = await axios.post('https://banka-apps.herokuapp.com/api/v1/auth/signin', {
+      postLoginData
+    });
+    console.log(postLoginData);
+    dispatch({ type: LOGIN_DATA, payload: signin });
+  } catch (error) {
+    console.log('error', error);
+  }
+};
 
 export function signUp(signUpData) {
   // const token = localStorage.getItem('token');
@@ -51,9 +36,9 @@ export function signUp(signUpData) {
       headers: {
         Accept: 'application/json, text/plain, */*',
         // 'access-token': token,
-        'Content-type': 'application/json',
+        'Content-type': 'application/json'
       },
-      body: JSON.stringify(signUpData),
+      body: JSON.stringify(signUpData)
     })
       .then(response => response.json())
       .then((userInfo) => {
