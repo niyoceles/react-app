@@ -94,7 +94,6 @@ ul li:hover,
 
 .error{
   color: rgb(180, 60, 60);
-  margin-top: -2%;
   margin-bottom: 2%;
 }
 .success{
@@ -889,3 +888,18 @@ a.links{
 #admin-section-panel{
   border: 1px solid;
 }
+
+.if-you-link{
+  float: left;
+}
+.signout{
+  right: 0;
+  margin-top: -25px;
+  background-color: rgb(218, 104, 104);
+  position: fixed;
+
+}
+
+input.form-control.input-error  {
+  border: 1px solid #dc3545;
+  }

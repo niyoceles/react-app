@@ -1,6 +1,6 @@
 import moxios from 'moxios';
 import store from '../__mocks__/store';
-import { fetchUser, loginData } from '../js/actions/index';
+import { fetchUser, loginData, signUp } from '../js/actions/index';
 import {
   SIGN_UP_FAILURE, SIGN_UP_SUCCESS, DATA_LOADED_SUCCESS, DATA_LOADED_FAILURE, LOGIN_SUCCESS, LOGIN_FAILURE
 } from '../js/constants/action-types';
@@ -85,6 +85,46 @@ describe('Actions Test', () => {
         expect(store.getActions()).toEqual([
           {
             type: LOGIN_FAILURE,
+            payload: undefined
+          }
+        ]);
+      });
+    });
+  });
+
+  // SIGNUP
+  describe('Actions for signUp', () => {
+    it('should signup success', () => {
+      moxios.wait(() => {
+        const request = moxios.requests.mostRecent();
+        request.respondWith({
+          status: 201,
+          response: { message: 'successful signup' }
+        });
+      });
+
+      return store.dispatch(signUp()).then(() => {
+        expect(store.getActions()).toEqual([
+          {
+            type: SIGN_UP_SUCCESS,
+            payload: 'successful signup'
+          }
+        ]);
+      });
+    });
+
+    it('should not not signup', () => {
+      moxios.wait(() => {
+        const request = moxios.requests.mostRecent();
+        request.respondWith({
+          status: 404,
+          response: { message: 'error' }
+        });
+      });
+      return store.dispatch(signUp()).then(() => {
+        expect(store.getActions()).toEqual([
+          {
+            type: SIGN_UP_FAILURE,
             payload: undefined
           }
         ]);

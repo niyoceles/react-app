@@ -1,12 +1,11 @@
-import React, { Component } from 'react';
+import React, { Component, Fragment } from 'react';
 import { connect } from 'react-redux';
 import uuidv1 from 'uuid';
+import Validator from '../validation/signup';
 import { loginData, signUp } from '../actions/index';
 
 export class Auth extends Component {
-  constructor() {
-    super();
-    this.state = {
+  state = {
       showModalSignUp: false,
       showModalSignIn: false,
       firstName: '',
@@ -15,36 +14,48 @@ export class Auth extends Component {
       phone: '',
       userName: '',
       password: '',
-      location: ''
+      location: '',
+      emailError: '',
+      usernameError: '',
+      passwordError: '',
+      redirecting: false,
     };
 
-    this.handleChange = this.handleChange.bind(this);
-    this.handleSubmit = this.handleSubmit.bind(this);
-    this.handleSubmitSignup = this.handleSubmitSignup.bind(this);
+  toggleModalsignUp = () => {
+    this.setState(prevState => ({
+       showModalSignUp: !prevState.showModalSignUp ,
+      }));
+    }
 
-    this.toggleModalsignUp = this.toggleModalsignUp.bind(this);
-    this.toggleModalsignIn = this.toggleModalsignIn.bind(this);
+  toggleModalsignIn = () => {
+    this.setState(prevState => ({
+      showModalSignIn: !prevState.showModalSignIn ,
+     }));
   }
 
-  toggleModalsignUp() {
-    const { showModalSignUp } = this.state;
-    this.setState({ showModalSignUp: !showModalSignUp });
-  }
-
-  toggleModalsignIn() {
-    const { showModalSignIn } = this.state;
-    this.setState({ showModalSignIn: !showModalSignIn });
-  }
-
-  handleChange(event) {
+  handleChange = event => {
     this.setState({ [event.target.id]: event.target.value });
   }
 
-  handleSubmitSignup(e) {
+  handleSubmitSignup = e => {
     e.preventDefault();
     const {
       firstName, lastName, email, phone, userName, password, location
     } = this.state;
+
+    this.clearErrors();
+    const emailError = Validator.validateEmail({ email });
+    const usernameError = Validator.validateUsername({ userName });
+    const passwordError = Validator.validatePassoword({ password });
+    if (emailError) {
+      return this.displayError(emailError, 'emailError');
+    }
+    if (usernameError) {
+      return this.displayError(usernameError, 'usernameError');
+    }
+    if (passwordError) {
+      return this.displayError(passwordError, 'passwordError');
+    }
 
     const signUpData = {
       id: uuidv1(),
@@ -61,15 +72,28 @@ export class Auth extends Component {
     this.props.signUp(signUpData);
   }
 
-  handleSubmit(event) {
+  handleSubmit = event => {
     event.preventDefault();
+    const {
+      email, password
+    } = this.state;
     const postLoginData = {
-      email: this.state.email,
-      password: this.state.password
+      email,
+      password
     };
-    this.props.loginData = (postLoginData);
-    console.log(this);
+    this.props.loginData(postLoginData);
   }
+
+  displayError = (error, key) => {
+    this.setState({ [key]: error });
+  };
+
+  clearErrors = () => this.setState(prevState => ({
+    ...prevState,
+    emailError: '',
+    usernameError: '',
+    passwordError: '',
+  }));
 
   render() {
     const linkStyle = {
@@ -77,29 +101,14 @@ export class Auth extends Component {
 
     };
 
-    const userLogin = this.props.aaa.login;
-    localStorage.setItem('token', userLogin.token);
-    localStorage.setItem('userDetails', JSON.stringify(userLogin.data));
-    if (userLogin.status === 200) {
-      alert('Successful login');
-      window.location = './users';
-    }
-    if (userLogin.status === 400) {
-      alert(userLogin.error);
-    }
-
     const {
       showModalSignUp, showModalSignIn,
-      firstName, lastName, email, phone, userName, password, location
+      firstName, lastName, email, phone, userName, password, location, emailError, usernameError, passwordError
     } = this.state;
 
-    const userSignup = this.props.newUser.item;
-    localStorage.setItem('token', userSignup.token);
-    localStorage.setItem('userDetails', JSON.stringify(userSignup.data));
-    if (userSignup.status === 201) {
-      alert('Successful signup');
-      window.location = './users';
-    }
+    const {
+      loginError
+    } = this.props;
 
     // eslint-disable-next-line no-nested-ternary
     return showModalSignUp ? (
@@ -149,16 +158,16 @@ export class Auth extends Component {
             required
           />
           <div className="error" id="lastname-error" />
-          <label>Email</label>
+          <label>Email * </label>
           <input
-            type="email"
+            type="text"
             placeholder="Enter Email"
+            className={`form-control ${emailError ? 'input-error' : ''}`}
             id="email"
             value={email}
             onChange={this.handleChange}
-            required
           />
-          <div className="error" id="email-error" />
+          {emailError && <div className="error">{emailError}</div>}
           <label>Phone Number</label>
           <input
             type="number"
@@ -169,26 +178,27 @@ export class Auth extends Component {
             required
           />
           <div className="error" id="phone-error" />
-          <label>Username</label>
+          <label>Username *</label>
           <input
             type="text"
             placeholder="Enter Username eg: niayohd "
             id="userName"
+            className={`form-control ${usernameError ? 'input-error' : ''}`}
             value={userName}
             onChange={this.handleChange}
             required
           />
-          <div className="error" id="username-error" />
-          <label>Password</label>
+          { usernameError && <div className="error">{usernameError}</div>}
+          <label>Password *</label>
           <input
             type="password"
             placeholder="Enter Password"
+            className={`form-control ${passwordError ? 'input-error' : ''}`}
             id="password"
             value={password}
             onChange={this.handleChange}
-            required
           />
-          <div className="error" id="password-error" />
+          { passwordError && <div className="error">{passwordError}</div>}
           <label>Location</label>
           <input
             type="text"
@@ -196,7 +206,6 @@ export class Auth extends Component {
             id="location"
             value={location}
             onChange={this.handleChange}
-            required
           />
           <div className="error" id="location-error" />
           <div className="error" id="connection-error" />
@@ -205,10 +214,12 @@ export class Auth extends Component {
           <div className="error" id="account-exist" />
         </form>
         <p className="signInlink">
-          {' '}
-Are you a Member?
-          <button onClick={this.toggleModalsignUp} style={linkStyle}>Sign In  </button>
-          {' '}
+          <div className="if-you-link">
+            {' '}
+            <h4>Are you a Member?</h4>
+            <button onClick={this.toggleModalsignUp} style={linkStyle}>Sign In  </button>
+            {' '}
+          </div>
         </p>
       </div>
     ) : showModalSignIn ? (
@@ -260,13 +271,17 @@ Are you a Member?
           />
           <div className="error" id="incorrect-error" />
           <div className="error" id="connection-error-login" />
+          {}
           <button type="submit" id="btn-sign-in" className="btn-submit">Sign In </button>
           <div className="success" id="success-login" />
+          {loginError === 'Sorry, your email or password is incorrect' ? (<div className="error"> Sorry, your email or password is incorrect</div>) : false}
           <p className="signUplink">
-            {' '}
-Not yet a Member?
-            <button onClick={this.toggleModalsignUp} style={linkStyle}> Sign Up</button>
-            {' '}
+            <div className="if-you-link">
+              {' '}
+              <h4>Not yet a Member?</h4>
+              <button onClick={this.toggleModalsignUp} style={linkStyle}> Sign Up</button>
+              {' '}
+            </div>
           </p>
         </form>
       </div>
@@ -305,7 +320,7 @@ Not yet a Member?
               <img src={require('../../assets/open-account.jpg')} alt="Service" />
               <h1>Opening Account:</h1>
               <h3>Feel free to open an account by signup here</h3>
-              <button className="get-stared-link">Get Started</button>
+              <button onClick={this.toggleModalsignUp} className="get-stared-link">Get Started</button>
             </div>
             <div className="panel">
               <img src={require('../../assets/loan1.jpg')} alt="security" />
@@ -343,19 +358,11 @@ Please Feel Free to Contact on our
     );
   }
 }
-function mapDispatchToProps(dispatch) {
-  return {
-    loginData: login => dispatch(loginData(login)),
-    signUp: user => dispatch(signUp(user))
-  };
-}
 
-function mapStateToProps(state) {
-  return {
-    aaa: state.newLogin,
+const mapStateToProps = (state)=>( {
+    loginError: state.newLogin.error,
     newUser: state.newUser
-  };
-}
+});
 
-const Form = connect(mapStateToProps, mapDispatchToProps)(Auth);
+const Form = connect(mapStateToProps,{signUp, loginData})(Auth);
 export default Form;
