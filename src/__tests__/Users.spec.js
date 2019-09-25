@@ -7,6 +7,6 @@ describe('testing Users component', () => {
   test('should render Users component', () => {
     const props = { fetchUser: jest.fn(), remoteUsers: [] };
     const wrapper = shallow(<Users {...props} />);
-    expect(wrapper).toMatchSnapshot();
+    expect(wrapper).toHaveLength(1);
   });
 });

@@ -1,11 +1,16 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-import { fetchUser } from '../actions/index';
+import { fetchUser, logout } from '../actions/index';
 
 export class Users extends Component {
   componentWillMount() {
     this.props.fetchUser();
+  }
+
+  logout = (e) => {
+    e.preventDefault();
+    this.props.logout();
   }
 
   render() {
@@ -84,7 +89,15 @@ Area/ Location:
     return (
 
       <div>
-        <h2 style={titleHeader}> Banka Application Users</h2>
+        <h2 style={titleHeader}>
+          {' '}
+Banka Application Users
+          {' '}
+          <button type="button" onClick={this.logout} className="signout">
+              Sign out
+          </button>
+
+        </h2>
         {allUsers}
       </div>
     );
@@ -97,4 +110,4 @@ Users.propTypes = {
 const mapStateToProps = state => ({
   remoteUsers: state.remoteUsers.items
 });
-export default connect(mapStateToProps, { fetchUser })(Users);
+export default connect(mapStateToProps, { fetchUser, logout })(Users);
